@@ -12,53 +12,55 @@ class DisplaySongs {
             evt.preventDefault();
             new DisplaySongs().searchSongs();
         };
+        document.getElementById('form-song-id').onsubmit = function (evt) {
+            evt.preventDefault();
+            new DisplaySongs().searchSongID();
+        };
     }
 
     searchSongs() {
 
         let txt = document.getElementById('txtBusqueda').value;
         let url = '/RESTSongsProject/webresources/song/songnamerequest/' + txt;
-        
-        console.log(url)
+
+        console.log(url);
 
         fetch(url).then(function (response) {
             return response.json();
         }).then(function (data) {
-            
+
             var tbl = document.getElementById('tbl-songs');
 
             tbl.innerHTML = '';
-            
-            console.log("PIJAAAAA");
-            
+
             for (var i = 0; i < data.length; i++) {
                 tbl.innerHTML += '<tr><td>' + data[i].id + '</td><td>' + data[i].name + '</td><td>' + data[i].album + '</td><td>' + data[i].releasedYear + '</td><td>' + data[i].author + '</td><td>' + data[i].durationTime + '</td>';
             }
-            
+
         }).catch(exception => console.error(exception.stack));
 
     }
 
     searchSongID() {
-        let txt = document.getElementById('txtBusqueda').value;
-        let url = '/RESTSongsProject/webresources/song/songnamerequest/' + txt;
-        
-        console.log(url)
+
+        let id = document.getElementById('idBusqueda').value;
+
+        if (isNaN(id)) {
+            return;
+        }
+
+        let url = '/RESTSongsProject/webresources/song/songidrequest/' + id;
 
         fetch(url).then(function (response) {
             return response.json();
         }).then(function (data) {
-            
-            var tbl = document.getElementById('tbl-songs');
 
+            var tbl = document.getElementById('tbl-songs');
+            console.log(data);
             tbl.innerHTML = '';
             
-            console.log("PIJAAAAA");
-            
-            for (var i = 0; i < data.length; i++) {
-                tbl.innerHTML += '<tr><td>' + data[i].id + '</td><td>' + data[i].name + '</td><td>' + data[i].album + '</td><td>' + data[i].releasedYear + '</td><td>' + data[i].author + '</td><td>' + data[i].durationTime + '</td>';
-            }
-            
+            tbl.innerHTML += '<tr><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.album + '</td><td>' + data.releasedYear + '</td><td>' + data.author + '</td><td>' + data.durationTime + '</td>';
+
         }).catch(exception => console.error(exception.stack));
     }
 

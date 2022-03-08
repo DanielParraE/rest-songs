@@ -13,8 +13,12 @@ and open the template in the editor.
     </head>
     <body>
         <form id="form-song-name" action="#" method="GET">
-            <input id="txtBusqueda" type="text" placeholder="Buscar" name="busqueda" required="required" />
+            <input id="txtBusqueda" type="text" placeholder="Buscar por nombre" name="busqueda" required="required" />
             <button id="btnBuscar" type="submit">Buscar</button>
+        </form>
+        <form id="form-song-id" action="#" method="GET">
+            <input id="idBusqueda" type="text" placeholder="Buscar por ID" name="busquedaID" required="required" />
+            <button id="btnObtener" type="submit">Buscar</button>
         </form>
         <table id="tbl-songs" style="width: 100%" border="1">
             <tr>
