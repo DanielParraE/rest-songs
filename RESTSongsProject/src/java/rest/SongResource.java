@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package rest;
 
 import com.google.gson.Gson;
@@ -22,20 +17,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import repositories.ControlRepositories;
 
-/**
- * REST Web Service
- *
- * @author Daniel Parra
- */
 @Path("/song/")
 public class SongResource {
 
     @Context
     private UriInfo context;
-
-    /**
-     * Creates a new instance of SongResource
-     */
+    
     public SongResource() {
     }
 
@@ -83,45 +70,43 @@ public class SongResource {
     @Path("/addsong/")
     public Response postSong(String song) {
         
-        //System.out.println(song);
-        
         Gson gson = new Gson();
         
         Song sng = gson.fromJson(song, Song.class);
         
         ControlRepositories.getSongRepository().guardar(sng);
         
-        return Response.ok().entity("Si llegho master").build();
+        return Response.ok().entity("Si llegho master.").build();
         
     }
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{id}")
+    @Path("/deletesong/{id}")
     public Response deleteSong(@PathParam("id") int id) {
         
-        System.out.println(id);
+        ControlRepositories.getSongRepository().eliminar(id);
         
-        // ControlRepositories.getSongRepository().guardar(a);
-        
-        return Response.ok().entity("Si llegho master").build();
+        return Response.ok().entity("Ya se elimino master.").build();
         
     }
-
-    /**
-     * PUT method for updating or creating an instance of SongResource
-     * @param content representation for the resource
-     * @return service response
-     */
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response putSong(Song content) {
+    @Path("/editsong/")
+    public Response editSong(String song) {
         
-        System.out.println(content.toString());
+        //System.out.println(sng);
         
-        // ControlRepositories.getSongRepository().actualizar(content);
+        Gson gson = new Gson();
         
-        return Response.ok().entity("Si se guardo master").build();
+        System.out.println(song);
+        
+        Song sng = gson.fromJson(song, Song.class);
+        
+        ControlRepositories.getSongRepository().actualizar(sng);
+        
+        return Response.ok().entity("Si se actualizo master.").build();
         
     }
     
