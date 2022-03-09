@@ -80,11 +80,16 @@ public class SongResource {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postSong(Song a) {
+    @Path("/addsong/")
+    public Response postSong(String song) {
         
-        System.out.println(a.toString());
+        //System.out.println(song);
         
-        // ControlRepositories.getSongRepository().guardar(a);
+        Gson gson = new Gson();
+        
+        Song sng = gson.fromJson(song, Song.class);
+        
+        ControlRepositories.getSongRepository().guardar(sng);
         
         return Response.ok().entity("Si llegho master").build();
         
